@@ -1,8 +1,11 @@
 import { Schema, model } from "mongoose";
 
-interface INote extends Document {}
+export interface INote extends Document {
+  title: string;
+  description: string;
+}
 
-const noteSchema = new Schema(
+const noteSchema = new Schema<INote>(
   {
     title: {
       type: String,
