@@ -1,11 +1,16 @@
 import "dotenv/config";
 import express, { NextFunction, Request, Response } from "express";
 import cors from "cors";
+import cookieParser from "cookie-parser";
+
 import { connectDb } from "./config/db";
+
 import notesRoute from "./api/note/note.route";
+import authRoute from "./api/auth/auth.route";
+
 import errorHandler from "./middleware/errorHandler";
 import { CORS_ORIGIN, PORT, NODE_ENV } from "./constants/env";
-import cookieParser from "cookie-parser";
+import { OK } from "./constants/http";
 
 const app = express();
 
@@ -20,14 +25,12 @@ app.use(
 app.use(cookieParser());
 
 app.use("/api/v1/note", notesRoute);
+app.use("/api/v1/auth", authRoute);
 
-app.get("/health", async (req: Request, res: Response, next: NextFunction) => {
-  try {
-    throw new Error("Test error for Sentry");
-  } catch (error) {
-    next(error);
-  }
-  res.status(200).json({ status: "OK", timestamp: new Date().toISOString() });
+app.get("/health", (req: Request, res: Response, next: NextFunction) => {
+  res
+    .status(OK)
+    .json({ status: "healthy", timestamp: new Date().toISOString() });
 });
 
 app.use(errorHandler);

@@ -7,12 +7,12 @@ import {
   updateNoteById,
 } from "./note.controller";
 
-const router = Router();
+const noteRoute = Router();
 
-router.post("/", createNote);
-router.get("/", fetchAllNotes);
-router.get("/:id", fetchNoteById);
-router.delete("/:id", deleteNoteById);
-router.put("/:id", updateNoteById);
+noteRoute.post("/", createNote);
+noteRoute.get("/", fetchAllNotes);
+noteRoute.get("/:id", fetchNoteById);
+noteRoute.delete("/:id", deleteNoteById);
+noteRoute.put("/:id", updateNoteById);
 
-export default router;
+export default noteRoute;
